@@ -7,3 +7,8 @@
 ## Context
 - employee CURD API
 - API with transactional query
+
+---
+- Developer Note's - [link](/notes.md)
+
+---
