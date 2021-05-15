@@ -19,7 +19,7 @@
 
 
 ---
-## Run flask Application
+## Run Flask Application
 >- run app
 >- python main_file.py
 
