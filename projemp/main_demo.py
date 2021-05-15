@@ -19,20 +19,26 @@ def home():
 
 
 def list_to_str(list_val):
-    # return ','.join(list_val)
-    return ','.join(map(str, list_val))
+    return ','.join(list_val)
 
 def list_to_str_v2(list_val):
-    # return ','.join(list_val)
     res1 = '","'.join(map(str, list_val))
     return '"' + res1 + '"'
+
+def list_to_str_v3(list_val):
+    text = []
+    for val in list_val:
+        if isinstance(val, str):
+            text.append(str(val))
+        else:
+            text.append(val)
+    return ','.join(text)
 
 
 def insert_query(tbl_name: str, colms: list, vals: list) -> bool:
     db_conn = db_cursor = result = None
     try:
         db_query = 'INSERT INTO {table_name}({columns}) VALUES({values});'.format(table_name=tbl_name, columns=list_to_str(colms), values=list_to_str_v2(vals))
-        # db_query = 'INSERT INTO {table_name}({columns}) VALUES(values);'.format(table_name=tbl_name, columns=list_to_str(colms), values=list_to_str(vals)
         logger.debug('---db_query: ---\n%s' % db_query)
         db_conn = mysql.connect()
         db_cursor = db_conn.cursor()
@@ -59,8 +65,9 @@ def emp_create():
             is_created = insert_query('employee_details', list(req_params.keys()), list(req_params.values()))
             logger.debug('---is_created: ---\n%s' % is_created)
             if is_created:
-                # result = jsonify({'message': ['Employee created successfully.']})
-                result = jsonify('Employee created successfully.')
+                result = jsonify({'message': ['Employee created successfully.'],
+                                  'data': {'employee_id': is_created}})
+                # result = jsonify('Employee created successfully.')
                 result.status_code = 200
         return result
     except Exception as ex:
