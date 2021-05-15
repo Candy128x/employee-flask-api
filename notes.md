@@ -19,4 +19,9 @@
 
 
 ---
+## Run flask Application
+>- run app
+>- python main_file.py
 
+
+---
